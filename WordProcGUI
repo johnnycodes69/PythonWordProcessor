@@ -16,7 +16,7 @@ class WordProcessorGUI(QMainWindow):
         self.create_actions()
         self.create_menus()
 
-        self.setWindowTitle("Word Processor")
+        self.setWindowTitle("Python Word Processor")
         self.setGeometry(100, 100, 800, 600)
         self.show()
 
@@ -36,8 +36,8 @@ class WordProcessorGUI(QMainWindow):
         self.exit_action = QAction("Exit", self)
         self.exit_action.triggered.connect(self.close)
 
-        self.edit_action = QAction("Edit", self)
-        self.edit_action.triggered.connect(self.edit_document)
+        #self.edit_action = QAction("Edit", self)
+        #self.edit_action.triggered.connect(self.edit_document)
 
         self.format_action = QAction("Format", self)
         self.format_action.triggered.connect(self.format_text)
