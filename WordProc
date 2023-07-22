@@ -1,0 +1,92 @@
+class WordProcessor:
+    def __init__(self):
+        self.document = ""
+        self.filename = None
+
+    def create_document(self):
+        self.document = ""
+        self.filename = None
+        print("New document created.")
+
+    def open_document(self, filename):
+        try:
+            with open(filename, "r") as file:
+                self.document = file.read()
+                self.filename = filename
+            print(f"Document '{filename}' opened.")
+        except FileNotFoundError:
+            print("File not found. Please make sure the file exists.")
+
+    def save_document(self):
+        if self.filename:
+            with open(self.filename, "w") as file:
+                file.write(self.document)
+            print(f"Document saved as '{self.filename}'.")
+        else:
+            print("Please save the document with a filename using 'save_as'.")
+
+    def save_document_as(self, filename):
+        self.filename = filename
+        self.save_document()
+
+    def edit_document(self):
+        print("Start editing the document. Type 'exit' on a new line to finish.")
+        while True:
+            line = input()
+            if line == "exit":
+                break
+            self.document += line + "\n"
+
+    def format_text(self):
+        print("Format options: bold, italic, underline, align_left, align_right, align_center")
+        option = input("Enter the format option: ").strip()
+
+        if option == "bold":
+            self.document = f"**{self.document.strip()}**"
+        elif option == "italic":
+            self.document = f"*{self.document.strip()}*"
+        elif option == "underline":
+            self.document = f"__{self.document.strip()}__"
+        elif option == "align_left":
+            self.document = self.document.lstrip()
+        elif option == "align_right":
+            self.document = self.document.rstrip()
+        elif option == "align_center":
+            self.document = self.document.center(80)
+        else:
+            print("Invalid format option.")
+
+    def print_document(self):
+        print("\n" + self.document + "\n")
+
+    def run(self):
+        print("Welcome to Simple Word Processor!")
+        while True:
+            print("Options: create, open, save, save_as, edit, format, print, exit")
+            command = input("Enter a command: ").strip()
+
+            if command == "create":
+                self.create_document()
+            elif command == "open":
+                filename = input("Enter the filename to open: ").strip()
+                self.open_document(filename)
+            elif command == "save":
+                self.save_document()
+            elif command == "save_as":
+                filename = input("Enter the filename to save as: ").strip()
+                self.save_document_as(filename)
+            elif command == "edit":
+                self.edit_document()
+            elif command == "format":
+                self.format_text()
+            elif command == "print":
+                self.print_document()
+            elif command == "exit":
+                break
+            else:
+                print("Invalid command. Try again.")
+
+
+if __name__ == "__main__":
+    wp = WordProcessor()
+    wp.run()
