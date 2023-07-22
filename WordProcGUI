@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QVBoxLayout, QWidget, QFontDialog
 
 
 class WordProcessorGUI(QMainWindow):
@@ -36,11 +36,15 @@ class WordProcessorGUI(QMainWindow):
         self.exit_action = QAction("Exit", self)
         self.exit_action.triggered.connect(self.close)
 
-        #self.edit_action = QAction("Edit", self)
-        #self.edit_action.triggered.connect(self.edit_document)
+        self.edit_action = QAction("Edit", self)
+        self.edit_action.triggered.connect(self.edit_document)
 
-        self.format_action = QAction("Format", self)
-        self.format_action.triggered.connect(self.format_text)
+        #Redundant with the new Font menu option
+        #self.format_action = QAction("Format", self)
+        #self.format_action.triggered.connect(self.format_text)
+
+        self.font_action = QAction("Change Font", self)
+        self.font_action.triggered.connect(self.change_font)
 
     def create_menus(self):
         menu_bar = self.menuBar()
@@ -56,7 +60,9 @@ class WordProcessorGUI(QMainWindow):
         edit_menu.addAction(self.edit_action)
 
         format_menu = menu_bar.addMenu("Format")
-        format_menu.addAction(self.format_action)
+        #format_action isn't needed anymore with the Font options
+        #format_menu.addAction(self.format_action)
+        format_menu.addAction(self.font_action)      
 
     def create_document(self):
         self.text_edit.clear()
@@ -86,9 +92,15 @@ class WordProcessorGUI(QMainWindow):
 
     def edit_document(self):
         pass
+    
+    #I don't think we need this option because the Font selection method actually opens a comprehensive option box (size, font, style, etc.)
+    #def format_text(self):
+    #    pass
 
-    def format_text(self):
-        pass
+    def change_font(self):
+        font, ok = QFontDialog.getFont(self.text_edit.font(), self, "Select Font")
+        if ok:
+            self.text_edit.setFont(font)
 
 
 if __name__ == "__main__":
