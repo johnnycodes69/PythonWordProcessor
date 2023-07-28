@@ -1,2 +1,1 @@
-A *very* basic word processor I wrote in Python as part of learning the language
-I was assisted by ChatGPT as I'd never built a GUI before, thanks PyQt
+First Python project! A *very* basic word processor I wrote as part of learning the language, with assistance (sometimes anti-assistance...) by ChatGPT
