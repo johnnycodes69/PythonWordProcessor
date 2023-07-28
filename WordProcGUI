@@ -62,9 +62,11 @@ class WordProcessorGUI(QMainWindow):
         self.edit_action = QAction("Edit", self)
         self.edit_action.triggered.connect(self.edit_document)
 
-        #Redundant with the new Font menu option
-        #self.format_action = QAction("Format", self)
-        #self.format_action.triggered.connect(self.format_text)
+        self.copy_action = QAction("Copy", self)
+        self.copy_action.triggered.connect(self.copy_text)
+
+        self.paste_action = QAction("Paste", self)
+        self.paste_action.triggered.connect(self.paste_text)
 
         self.font_action = QAction("Change Font", self)
         self.font_action.triggered.connect(self.change_font)
@@ -81,6 +83,8 @@ class WordProcessorGUI(QMainWindow):
 
         edit_menu = menu_bar.addMenu("Edit")
         edit_menu.addAction(self.edit_action)
+        edit_menu.addAction(self.copy_action)
+        edit_menu.addAction(self.paste_action)
 
         format_menu = menu_bar.addMenu("Format")
         #format_action isn't needed anymore with the Font options
@@ -115,11 +119,20 @@ class WordProcessorGUI(QMainWindow):
 
     def edit_document(self):
         pass
-    
-    #I don't think we need this option because the Font selection method actually opens a comprehensive option box (size, font, style, etc.)
-    #def format_text(self):
-    #    pass
 
+    def copy_text(self):
+        cursor = self.text_edit.textCursor()
+        selected_text = cursor.selectedText()
+        if selected_text:
+            clipboard = QApplication.clipboard()
+            clipboard.setText(selected_text)
+
+    def paste_text(self):
+        clipboard = QApplication.clipboard()
+        text_to_paste = clipboard.text()
+        if text_to_paste:
+            self.text_edit.insertPlainText(text_to_paste)
+    
     def change_font(self):
         font, ok = QFontDialog.getFont(self.text_edit.font(), self, "Select Font")
         if ok:
